@@ -210,6 +210,13 @@ function Key(options) {
   });
 }
 
+Key.prototype.child = function(options) {
+  var child = new Key(options);
+  child.parent = this;
+
+  return child;
+};
+
 entity.Key = Key;
 
 /**
