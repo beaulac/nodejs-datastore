@@ -500,14 +500,26 @@ function entityToEntityProto(entityObject) {
 
     if (!hasArrayPath && !hasEntityPath) {
       if (entity.properties) {
+        // This is an embedded entity; only exclude if path matches.
         if (entity.properties[path]) {
           // This is the property to exclude!
           entity.properties[path].excludeFromIndexes = true;
         }
-      } else if (!path) {
-        // This is a primitive that should be excluded.
-        entity.excludeFromIndexes = true;
+        return;
       }
+
+      if (!path) {
+        if (entity.arrayValue) {
+          entity.arrayValue.values.forEach(function(arrayValue) {
+            var memberEntity = arrayValue.entityValue || arrayValue;
+            excludePathFromEntity(memberEntity, path);
+          });
+        } else {
+          // This is a non-array and non-entity that should be excluded.
+          entity.excludeFromIndexes = true;
+        }
+      }
+
       return;
     }
 
@@ -524,7 +536,7 @@ function entityToEntityProto(entityObject) {
     var delimiter = firstPathPartIsArray ? '[]' : '.';
     var splitPath = path.split(delimiter);
     var firstPathPart = splitPath.shift();
-    var remainderPath = splitPath.join(delimiter).replace(/^(\.|\[\])/, '');
+    var remainderPath = splitPath.join(delimiter).replace(/^(\.|\[])/, '');
 
     if (!(entity.properties && entity.properties[firstPathPart])) {
       // Either a primitive or an entity for which this path doesn't apply.
