@@ -1,7 +1,5 @@
 /// <reference types="node" />
 
-import { DatastoreDouble, DatastoreGeopoint } from '@google-cloud/datastore/entity';
-
 declare module '@google-cloud/datastore' {
     export = Datastore;
 

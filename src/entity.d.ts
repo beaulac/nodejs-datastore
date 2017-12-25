@@ -2,6 +2,7 @@ declare module '@google-cloud/datastore/entity' {
     interface DatastoreInt {
         value: string;
     }
+
     interface DatastoreDouble {
         value: string;
     }
@@ -10,6 +11,7 @@ declare module '@google-cloud/datastore/entity' {
         latitude: number;
         longitude: number;
     }
+
     interface DatastoreGeopoint {
         value: DatastoreCoords;
     }
@@ -27,7 +29,9 @@ declare module '@google-cloud/datastore/entity' {
         path: DatastoreKeyPath;
     }
 
-    interface DatastoreKey {
+    class DatastoreKey {
+        constructor(options: DatastoreKeyOptions);
+
         kind: string;
         id?: string;
         name?: string;
@@ -35,6 +39,8 @@ declare module '@google-cloud/datastore/entity' {
         readonly path: DatastoreKeyPath;
 
         parent?: DatastoreKey;
+
+        namespace: string;
     }
 
     type KEY_SYMBOL = symbol;
