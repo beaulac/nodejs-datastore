@@ -11,7 +11,7 @@ declare module '@google-cloud/datastore/transaction' {
         createQuery(namespace: string, kind: string): Query;
         createQuery(kind: string): Query;
 
-        save(entities: OneOrMany<object>): void;
+        save(entities: OneOrMany): void;
 
         delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): void;
 

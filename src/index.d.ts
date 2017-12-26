@@ -39,8 +39,8 @@ declare module '@google-cloud/datastore' {
         createQuery(namespace: string, kind: string): DatastoreQuery;
         createQuery(kind: string): DatastoreQuery;
 
-        save(entities: OneOrMany<object>, callback: CommitCallback): void;
-        save(entities: OneOrMany<object>): Promise<CommitResult>;
+        save(entities: OneOrMany, callback: CommitCallback): void;
+        save(entities: OneOrMany): Promise<CommitResult>;
 
         delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: CommitCallback): void;
         delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<CommitResult>;

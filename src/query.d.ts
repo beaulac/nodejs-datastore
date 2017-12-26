@@ -1,12 +1,19 @@
+/// <reference types="node" />
+
 declare module '@google-cloud/datastore/query' {
     import { DatastoreKey } from '@google-cloud/datastore/entity';
+    import { DatastoreRequest } from '@google-cloud/datastore/request';
 
     type MoreResultsAfterCursor = 'MORE_RESULTS_AFTER_CURSOR';
     type MoreResultsAfterLimit = 'MORE_RESULTS_AFTER_LIMIT';
     type NoMoreResults = 'NO_MORE_RESULTS';
 
     class Query {
-        constructor(scope: string, kinds: string, namespace: string);
+        scope: DatastoreRequest;
+        kinds: string;
+        namespace?: string;
+
+        constructor(scope: DatastoreRequest, kinds: string, namespace: string);
 
         filter(property: string, operator: QueryFilterOperator, value: any): this;
         filter(property: string, value: any): this;

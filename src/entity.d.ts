@@ -16,12 +16,11 @@ declare module '@google-cloud/datastore/entity' {
         value: DatastoreCoords;
     }
 
-    type PathElement = string | number | DatastoreInt;
-
     /**
      * DatastoreKeyPath is structured as [kind, identifier, kind, identifier, ...]
      * `kind` must be a string, `identifier` is a PathElement
      */
+    type PathElement = string | number | DatastoreInt;
     type DatastoreKeyPath = PathElement[];
 
     interface DatastoreKeyOptions {
@@ -47,9 +46,14 @@ declare module '@google-cloud/datastore/entity' {
 
     interface DatastorePayload<T> {
         key: DatastoreKey;
-        // TODO Include possibility of 'raw data' with indexing options, etc
-        data: T | object;
+        data: T | EntityDataProperty[];
         excludeFromIndexes?: string[];
+    }
+
+    interface EntityDataProperty {
+        name: string;
+        value: any;
+        excludeFromIndexes?: boolean;
     }
 
     /**
@@ -57,5 +61,5 @@ declare module '@google-cloud/datastore/entity' {
      * If using a raw T object, it MUST have a {@link Datastore_#KEY} symbol property of type {@link DatastoreKey}.
      */
     type ObjOrPayload<T> = T | DatastorePayload<T>;
-    type OneOrMany<T> = ObjOrPayload<T> | Array<ObjOrPayload<T>>;
+    type OneOrMany<T = object> = ObjOrPayload<T> | Array<ObjOrPayload<T>>;
 }

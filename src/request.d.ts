@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 declare module '@google-cloud/datastore/request' {
     import { DatastoreKey, OneOrMany } from '@google-cloud/datastore/entity';
     import { Query, QueryCallback, QueryOptions, QueryResult } from '@google-cloud/datastore/query';
@@ -30,17 +32,17 @@ declare module '@google-cloud/datastore/request' {
 
         runQueryStream(query: Query, options?: QueryOptions): NodeJS.ReadableStream;
 
-        save(entities: OneOrMany<object>, callback: CommitCallback): void;
-        save(entities: OneOrMany<object>): Promise<CommitResult> | void;
+        save(entities: OneOrMany, callback: CommitCallback): void;
+        save(entities: OneOrMany): Promise<CommitResult> | void;
 
-        insert(entities: OneOrMany<object>, callback: CommitCallback): void;
-        insert(entities: OneOrMany<object>): Promise<CommitResult>;
+        insert(entities: OneOrMany, callback: CommitCallback): void;
+        insert(entities: OneOrMany): Promise<CommitResult>;
 
-        update(entities: OneOrMany<object>, callback: CommitCallback): void;
-        update(entities: OneOrMany<object>): Promise<CommitResult>;
+        update(entities: OneOrMany, callback: CommitCallback): void;
+        update(entities: OneOrMany): Promise<CommitResult>;
 
-        upsert(entities: OneOrMany<object>, callback: CommitCallback): void;
-        upsert(entities: OneOrMany<object>): Promise<CommitResult>;
+        upsert(entities: OneOrMany, callback: CommitCallback): void;
+        upsert(entities: OneOrMany): Promise<CommitResult>;
     }
 
     interface MutationResult {
