@@ -25,7 +25,7 @@ declare module '@google-cloud/datastore/entity' {
 
     interface DatastoreKeyOptions {
         namespace?: string;
-        path: DatastoreKeyPath;
+        path: ReadonlyArray<PathElement>;
     }
 
     class DatastoreKey {

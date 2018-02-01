@@ -28,12 +28,23 @@ declare module '@google-cloud/datastore' {
     import { DatastoreTransaction } from '@google-cloud/datastore/transaction';
 
     class Datastore extends DatastoreRequest_ {
-        constructor(options: InitOptions);
+        constructor(options: DatastoreOptions);
 
         readonly KEY: KEY_SYMBOL;
+        static readonly KEY: KEY_SYMBOL;
+
         readonly MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
+        static readonly MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
+
         readonly MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
+        static readonly MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
+
         readonly NO_MORE_RESULTS: NoMoreResults;
+        static readonly NO_MORE_RESULTS: NoMoreResults;
+
+        static readonly Query: typeof DatastoreQuery;
+        static readonly DatastoreRequest: typeof DatastoreRequest_;
+        static readonly Transaction: typeof DatastoreTransaction;
 
         // tslint:disable-next-line unified-signatures (Arg is semantically different)
         createQuery(namespace: string, kind: string): DatastoreQuery;
@@ -66,22 +77,11 @@ declare module '@google-cloud/datastore' {
         determineBaseUrl_(customApiEndpoint?: string): void;
     }
 
-    interface InitOptions {
+    interface DatastoreOptions {
         apiEndpoint?: string;
         namespace?: string;
         projectId?: string;
         keyFilename?: string;
         credentials?: object;
-    }
-
-    namespace Datastore {
-        const KEY: KEY_SYMBOL;
-        const MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
-        const MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
-        const NO_MORE_RESULTS: NoMoreResults;
-
-        const Query: typeof DatastoreQuery;
-        const DatastoreRequest: typeof DatastoreRequest_;
-        const Transaction: typeof DatastoreTransaction;
     }
 }
