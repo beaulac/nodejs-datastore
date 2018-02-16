@@ -1,39 +1,38 @@
-declare module '@google-cloud/datastore/transaction' {
-    import Datastore_ = require('@google-cloud/datastore');
-    import { DatastoreKey, OneOrMany } from '@google-cloud/datastore/entity';
-    import { Query } from '@google-cloud/datastore/query';
-    import { DatastoreRequest, CommitCallback, CommitResult } from '@google-cloud/datastore/request';
+import Datastore = require('.');
+import { DatastoreKey, OneOrMany } from './entity';
+import { Query } from './query';
+import { CommitCallback, CommitResult, DatastoreRequest } from './request';
 
-    class DatastoreTransaction extends DatastoreRequest {
-        constructor(datastore: Datastore_);
 
-        // tslint:disable-next-line unified-signatures (Arg is semantically different)
-        createQuery(namespace: string, kind: string): Query;
-        createQuery(kind: string): Query;
+declare class DatastoreTransaction extends DatastoreRequest {
+    constructor(datastore: Datastore);
 
-        save(entities: OneOrMany): void;
+    // tslint:disable-next-line unified-signatures (Arg is semantically different)
+    createQuery(namespace: string, kind: string): Query;
+    createQuery(kind: string): Query;
 
-        delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): void;
+    save(entities: OneOrMany): void;
 
-        commit(): Promise<CommitResult>;
-        commit(callback: CommitCallback): void;
+    delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): void;
 
-        rollback(): Promise<RollbackResult>;
-        rollback(callback: RollbackCallback): void;
+    commit(): Promise<CommitResult>;
+    commit(callback: CommitCallback): void;
 
-        run(callback: TransactionCallback): void;
-        run(): Promise<TransactionResult>;
-    }
+    rollback(): Promise<RollbackResult>;
+    rollback(callback: RollbackCallback): void;
 
-    interface BeginTransactionResponse {
-        transaction: string;
-    }
-
-    type RollbackCallback = (err: Error, rollbackResponse: {}) => void;
-    type RollbackResult = [{}];
-
-    type TransactionCallback = (err: Error,
-                                tx: DatastoreTransaction,
-                                beginTxResponse: BeginTransactionResponse) => void;
-    type TransactionResult = [DatastoreTransaction, BeginTransactionResponse];
+    run(callback: TransactionCallback): void;
+    run(): Promise<TransactionResult>;
 }
+
+interface BeginTransactionResponse {
+    transaction: string;
+}
+
+type RollbackCallback = (err: Error, rollbackResponse: {}) => void;
+type RollbackResult = [{}];
+
+type TransactionCallback = (err: Error,
+                            tx: DatastoreTransaction,
+                            beginTxResponse: BeginTransactionResponse) => void;
+type TransactionResult = [DatastoreTransaction, BeginTransactionResponse];

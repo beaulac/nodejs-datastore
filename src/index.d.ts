@@ -1,87 +1,77 @@
 /// <reference types="node" />
+import {
+    DatastoreCoords,
+    DatastoreDouble,
+    DatastoreGeopoint,
+    DatastoreInt,
+    DatastoreKey,
+    DatastoreKeyOptions,
+    DatastoreKeyPath,
+    KEY_SYMBOL,
+    OneOrMany
+} from './entity';
+import { CommitCallback, CommitResult, DatastoreRequest } from './request';
+import { MoreResultsAfterCursor, MoreResultsAfterLimit, NoMoreResults, Query as DatastoreQuery } from './query';
+import { DatastoreTransaction } from './transaction';
 
-declare module '@google-cloud/datastore' {
-    export = Datastore;
 
-    import {
-        DatastoreKey,
-        KEY_SYMBOL,
-        DatastoreInt,
-        DatastoreDouble,
-        DatastoreGeopoint,
-        DatastoreKeyPath,
-        DatastoreKeyOptions,
-        DatastoreCoords,
-        OneOrMany
-    } from '@google-cloud/datastore/entity';
-    import {
-        DatastoreRequest as DatastoreRequest_,
-        CommitCallback,
-        CommitResult
-    } from '@google-cloud/datastore/request';
-    import {
-        Query as DatastoreQuery,
-        MoreResultsAfterCursor,
-        MoreResultsAfterLimit,
-        NoMoreResults
-    } from '@google-cloud/datastore/query';
-    import { DatastoreTransaction } from '@google-cloud/datastore/transaction';
+export = Datastore;
 
-    class Datastore extends DatastoreRequest_ {
-        constructor(options: DatastoreOptions);
 
-        readonly KEY: KEY_SYMBOL;
-        static readonly KEY: KEY_SYMBOL;
+declare class Datastore extends DatastoreRequest {
+    constructor(options: DatastoreOptions);
 
-        readonly MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
-        static readonly MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
+    readonly KEY: KEY_SYMBOL;
+    static readonly KEY: KEY_SYMBOL;
 
-        readonly MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
-        static readonly MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
+    readonly MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
+    static readonly MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
 
-        readonly NO_MORE_RESULTS: NoMoreResults;
-        static readonly NO_MORE_RESULTS: NoMoreResults;
+    readonly MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
+    static readonly MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
 
-        static readonly Query: typeof DatastoreQuery;
-        static readonly DatastoreRequest: typeof DatastoreRequest_;
-        static readonly Transaction: typeof DatastoreTransaction;
+    readonly NO_MORE_RESULTS: NoMoreResults;
+    static readonly NO_MORE_RESULTS: NoMoreResults;
 
-        // tslint:disable-next-line unified-signatures (Arg is semantically different)
-        createQuery(namespace: string, kind: string): DatastoreQuery;
-        createQuery(kind: string): DatastoreQuery;
+    static readonly Query: typeof DatastoreQuery;
+    static readonly DatastoreRequest: typeof DatastoreRequest;
+    static readonly Transaction: typeof DatastoreTransaction;
 
-        save(entities: OneOrMany, callback: CommitCallback): void;
-        save(entities: OneOrMany): Promise<CommitResult>;
+    // tslint:disable-next-line unified-signatures (Arg is semantically different)
+    createQuery(namespace: string, kind: string): DatastoreQuery;
+    createQuery(kind: string): DatastoreQuery;
 
-        delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: CommitCallback): void;
-        delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<CommitResult>;
+    save(entities: OneOrMany, callback: CommitCallback): void;
+    save(entities: OneOrMany): Promise<CommitResult>;
 
-        transaction(): DatastoreTransaction;
+    delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: CommitCallback): void;
+    delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<CommitResult>;
 
-        int(value: string | number): DatastoreInt;
+    transaction(): DatastoreTransaction;
 
-        isInt(value: any): value is DatastoreInt;
+    int(value: string | number): DatastoreInt;
 
-        double(value: string | number): DatastoreDouble;
+    isInt(value: any): value is DatastoreInt;
 
-        isDouble(value: any): value is DatastoreDouble;
+    double(value: string | number): DatastoreDouble;
 
-        geoPoint(coordinates: DatastoreCoords): DatastoreGeopoint;
+    isDouble(value: any): value is DatastoreDouble;
 
-        isGeoPoint(value: any): value is DatastoreGeopoint;
+    geoPoint(coordinates: DatastoreCoords): DatastoreGeopoint;
 
-        key(pathOrOptions: DatastoreKeyPath | DatastoreKeyOptions): DatastoreKey;
+    isGeoPoint(value: any): value is DatastoreGeopoint;
 
-        isKey(value: any): value is DatastoreKey;
+    key(pathOrOptions: DatastoreKeyPath | DatastoreKeyOptions): DatastoreKey;
 
-        determineBaseUrl_(customApiEndpoint?: string): void;
-    }
+    isKey(value: any): value is DatastoreKey;
 
-    interface DatastoreOptions {
-        apiEndpoint?: string;
-        namespace?: string;
-        projectId?: string;
-        keyFilename?: string;
-        credentials?: object;
-    }
+    determineBaseUrl_(customApiEndpoint?: string): void;
+}
+
+interface DatastoreOptions {
+    apiEndpoint?: string;
+    namespace?: string;
+    projectId?: string;
+    keyFilename?: string;
+    credentials?: object;
 }
