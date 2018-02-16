@@ -41,9 +41,7 @@ export class DatastoreKey {
     namespace: string;
 }
 
-type KEY_SYMBOL = symbol;
-
-export const KEY: KEY_SYMBOL;
+export const KEY_SYMBOL: symbol;
 
 interface DatastorePayload<T> {
     key: DatastoreKey;

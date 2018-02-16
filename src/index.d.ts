@@ -21,21 +21,21 @@ export = Datastore;
 declare class Datastore extends DatastoreRequest {
     constructor(options: DatastoreOptions);
 
-    readonly KEY: KEY_SYMBOL;
-    static readonly KEY: KEY_SYMBOL;
+    KEY: typeof KEY_SYMBOL;
+    static readonly KEY: typeof KEY_SYMBOL;
 
-    readonly MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
-    static readonly MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
+    MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
+    static MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
 
-    readonly MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
-    static readonly MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
+    MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
+    static MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
 
-    readonly NO_MORE_RESULTS: NoMoreResults;
-    static readonly NO_MORE_RESULTS: NoMoreResults;
+    NO_MORE_RESULTS: NoMoreResults;
+    static NO_MORE_RESULTS: NoMoreResults;
 
-    static readonly Query: typeof DatastoreQuery;
-    static readonly DatastoreRequest: typeof DatastoreRequest;
-    static readonly Transaction: typeof DatastoreTransaction;
+    static Query: typeof DatastoreQuery;
+    static DatastoreRequest: typeof DatastoreRequest;
+    static Transaction: typeof DatastoreTransaction;
 
     // tslint:disable-next-line unified-signatures (Arg is semantically different)
     createQuery(namespace: string, kind: string): DatastoreQuery;
