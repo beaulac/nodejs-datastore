@@ -9,7 +9,7 @@
   },
   "repository": "googleapis/nodejs-datastore",
   "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
     "protos",
     "src",

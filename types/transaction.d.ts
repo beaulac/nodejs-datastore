@@ -1,4 +1,4 @@
-import Datastore = require('.');
+import Datastore = require('./index');
 import { DatastoreKey, OneOrMany } from './entity';
 import { Query } from './query';
 import { CommitCallback, CommitResult, DatastoreRequest } from './request';
