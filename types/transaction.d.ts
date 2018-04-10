@@ -1,8 +1,9 @@
 import Datastore = require('./index');
+import DatastoreRequest = require("./request");
+import Query = require("./query");
 import { DatastoreKey, OneOrMany } from './entity';
-import { Query } from './query';
-import { CommitCallback, CommitResult, DatastoreRequest } from './request';
 
+export = DatastoreTransaction;
 
 declare class DatastoreTransaction extends DatastoreRequest {
     constructor(datastore: Datastore);
@@ -15,24 +16,26 @@ declare class DatastoreTransaction extends DatastoreRequest {
 
     delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): void;
 
-    commit(): Promise<CommitResult>;
-    commit(callback: CommitCallback): void;
+    commit(): Promise<DatastoreRequest.CommitResult>;
+    commit(callback: DatastoreRequest.CommitCallback): void;
 
-    rollback(): Promise<RollbackResult>;
-    rollback(callback: RollbackCallback): void;
+    rollback(): Promise<DatastoreTransaction.RollbackResult>;
+    rollback(callback: DatastoreTransaction.RollbackCallback): void;
 
-    run(callback: TransactionCallback): void;
-    run(): Promise<TransactionResult>;
+    run(callback: DatastoreTransaction.TransactionCallback): void;
+    run(): Promise<DatastoreTransaction.TransactionResult>;
 }
 
-interface BeginTransactionResponse {
-    transaction: string;
+declare namespace DatastoreTransaction {
+    interface BeginTransactionResponse {
+        transaction: string;
+    }
+
+    type RollbackCallback = (err: Error, rollbackResponse: {}) => void;
+    type RollbackResult = [{}];
+
+    type TransactionCallback = (err: Error,
+                                tx: DatastoreTransaction,
+                                beginTxResponse: BeginTransactionResponse) => void;
+    type TransactionResult = [DatastoreTransaction, BeginTransactionResponse];
 }
-
-type RollbackCallback = (err: Error, rollbackResponse: {}) => void;
-type RollbackResult = [{}];
-
-type TransactionCallback = (err: Error,
-                            tx: DatastoreTransaction,
-                            beginTxResponse: BeginTransactionResponse) => void;
-type TransactionResult = [DatastoreTransaction, BeginTransactionResponse];

@@ -1,11 +1,19 @@
 /// <reference types="node" />
 import { DatastoreKey, OneOrMany } from './entity';
-import { Query, QueryCallback, QueryOptions, QueryResult } from './query';
+import Query = require('./query');
+import QueryOptions = Query.QueryOptions;
+import QueryCallback = Query.QueryCallback;
+import QueryResult = Query.QueryResult;
+import CommitCallback = DatastoreRequest.CommitCallback;
+import CommitResult = DatastoreRequest.CommitResult;
+
+
+export = DatastoreRequest;
 
 
 declare abstract class DatastoreRequest {
-    allocateIds(incompleteKey: DatastoreKey, n: number, callback: AllocateIdsCallback): void;
-    allocateIds(incompleteKey: DatastoreKey, n: number): Promise<AllocateIdsResult>;
+    allocateIds(incompleteKey: DatastoreKey, n: number, callback: DatastoreRequest.AllocateIdsCallback): void;
+    allocateIds(incompleteKey: DatastoreKey, n: number): Promise<DatastoreRequest.AllocateIdsResult>;
 
     createReadStream(keys: DatastoreKey | ReadonlyArray<DatastoreKey>,
                      options: QueryOptions): NodeJS.ReadableStream;
@@ -13,10 +21,10 @@ declare abstract class DatastoreRequest {
     delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: CommitCallback): void;
     delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<CommitResult> | void;
 
-    get(key: DatastoreKey, options: QueryOptions, callback: GetCallback<object>): void;
-    get(keys: ReadonlyArray<DatastoreKey>, options: QueryOptions, callback: GetCallback<object[]>): void;
-    get(key: DatastoreKey, callback: GetCallback<object>): void;
-    get(keys: ReadonlyArray<DatastoreKey>, callback: GetCallback<object[]>): void;
+    get(key: DatastoreKey, options: QueryOptions, callback: DatastoreRequest.GetCallback<object>): void;
+    get(keys: ReadonlyArray<DatastoreKey>, options: QueryOptions, callback: DatastoreRequest.GetCallback<object[]>): void;
+    get(key: DatastoreKey, callback: DatastoreRequest.GetCallback<object>): void;
+    get(keys: ReadonlyArray<DatastoreKey>, callback: DatastoreRequest.GetCallback<object[]>): void;
 
     get(key: DatastoreKey, options?: QueryOptions): Promise<[object | undefined]>;
     get(keys: ReadonlyArray<DatastoreKey>, options?: QueryOptions): Promise<[object[]]>;
@@ -40,21 +48,23 @@ declare abstract class DatastoreRequest {
     upsert(entities: OneOrMany): Promise<CommitResult>;
 }
 
-interface MutationResult {
-    key: DatastoreKey;
-    conflictDetected: boolean;
-    version: number;
+declare namespace DatastoreRequest {
+    interface MutationResult {
+        key: DatastoreKey;
+        conflictDetected: boolean;
+        version: number;
+    }
+
+    interface CommitResponse {
+        mutationResults: MutationResult[];
+        indexUpdates: number;
+    }
+
+    type CommitCallback = (err: Error, result: CommitResponse) => void;
+    type CommitResult = [CommitResponse];
+
+    type GetCallback<T> = (err: Error, entity: T) => void;
+
+    type AllocateIdsCallback = (err: Error, keys: DatastoreKey[]) => void;
+    type AllocateIdsResult = [DatastoreKey[]];
 }
-
-interface CommitResponse {
-    mutationResults: MutationResult[];
-    indexUpdates: number;
-}
-
-type CommitCallback = (err: Error, result: CommitResponse) => void;
-type CommitResult = [CommitResponse];
-
-type GetCallback<T> = (err: Error, entity: T) => void;
-
-type AllocateIdsCallback = (err: Error, keys: DatastoreKey[]) => void;
-type AllocateIdsResult = [DatastoreKey[]];

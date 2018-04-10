@@ -10,9 +10,9 @@ import {
     KEY_SYMBOL,
     OneOrMany
 } from './entity';
-import { CommitCallback, CommitResult, DatastoreRequest } from './request';
-import { MoreResultsAfterCursor, MoreResultsAfterLimit, NoMoreResults, Query as DatastoreQuery } from './query';
-import { DatastoreTransaction } from './transaction';
+import * as DatastoreRequest from './request';
+import * as Query from './query';
+import * as DatastoreTransaction from './transaction';
 
 
 export = Datastore;
@@ -24,28 +24,28 @@ declare class Datastore extends DatastoreRequest {
     KEY: typeof KEY_SYMBOL;
     static readonly KEY: typeof KEY_SYMBOL;
 
-    MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
-    static MORE_RESULTS_AFTER_CURSOR: MoreResultsAfterCursor;
+    MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
+    static MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
 
-    MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
-    static MORE_RESULTS_AFTER_LIMIT: MoreResultsAfterLimit;
+    MORE_RESULTS_AFTER_LIMIT: Query.MoreResultsAfterLimit;
+    static MORE_RESULTS_AFTER_LIMIT: Query.MoreResultsAfterLimit;
 
-    NO_MORE_RESULTS: NoMoreResults;
-    static NO_MORE_RESULTS: NoMoreResults;
+    NO_MORE_RESULTS: Query.NoMoreResults;
+    static NO_MORE_RESULTS: Query.NoMoreResults;
 
-    static Query: typeof DatastoreQuery;
+    static Query: typeof Query;
     static DatastoreRequest: typeof DatastoreRequest;
     static Transaction: typeof DatastoreTransaction;
 
     // tslint:disable-next-line unified-signatures (Arg is semantically different)
-    createQuery(namespace: string, kind: string): DatastoreQuery;
-    createQuery(kind: string): DatastoreQuery;
+    createQuery(namespace: string, kind: string): Query;
+    createQuery(kind: string): Query;
 
-    save(entities: OneOrMany, callback: CommitCallback): void;
-    save(entities: OneOrMany): Promise<CommitResult>;
+    save(entities: OneOrMany, callback: DatastoreRequest.CommitCallback): void;
+    save(entities: OneOrMany): Promise<DatastoreRequest.CommitResult>;
 
-    delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: CommitCallback): void;
-    delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<CommitResult>;
+    delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: DatastoreRequest.CommitCallback): void;
+    delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<DatastoreRequest.CommitResult>;
 
     transaction(): DatastoreTransaction;
 
