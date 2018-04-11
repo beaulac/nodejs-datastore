@@ -22,10 +22,10 @@ declare module '@google-cloud/datastore' {
     class Datastore extends DatastoreRequest {
         constructor(options: Datastore.InitOptions);
 
-        public readonly KEY: typeof KEY_SYMBOL;
-        public readonly MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
-        public readonly MORE_RESULTS_AFTER_LIMIT: Query.MoreResultsAfterLimit;
-        public readonly NO_MORE_RESULTS: Query.NoMoreResults;
+        readonly KEY: typeof KEY_SYMBOL;
+        readonly MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
+        readonly MORE_RESULTS_AFTER_LIMIT: Query.MoreResultsAfterLimit;
+        readonly NO_MORE_RESULTS: Query.NoMoreResults;
 
         static readonly Query: typeof Query;
         static readonly DatastoreRequest: typeof DatastoreRequest;
@@ -37,6 +37,18 @@ declare module '@google-cloud/datastore' {
 
         save(entities: OneOrMany, callback: CommitCallback): void;
         save(entities: OneOrMany): Promise<CommitResult>;
+
+        save(entities: OneOrMany, callback: CommitCallback): void;
+        save(entities: OneOrMany): Promise<CommitResult>;
+
+        insert(entities: OneOrMany, callback: CommitCallback): void;
+        insert(entities: OneOrMany): Promise<CommitResult>;
+
+        update(entities: OneOrMany, callback: CommitCallback): void;
+        update(entities: OneOrMany): Promise<CommitResult>;
+
+        upsert(entities: OneOrMany, callback: CommitCallback): void;
+        upsert(entities: OneOrMany): Promise<CommitResult>;
 
         delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: CommitCallback): void;
         delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<CommitResult>;
@@ -267,17 +279,13 @@ declare module '@google-cloud/datastore/request' {
 
         runQueryStream(query: Query, options?: QueryOptions): NodeJS.ReadableStream;
 
-        save(entities: OneOrMany, callback: CommitCallback): void;
-        save(entities: OneOrMany): Promise<CommitResult> | void;
+        save(entities: OneOrMany, callback?: CommitCallback): Promise<CommitResult> | void;
 
-        insert(entities: OneOrMany, callback: CommitCallback): void;
-        insert(entities: OneOrMany): Promise<CommitResult> | void;
+        insert(entities: OneOrMany, callback?: CommitCallback): Promise<CommitResult> | void;
 
-        update(entities: OneOrMany, callback: CommitCallback): void;
-        update(entities: OneOrMany): Promise<CommitResult> | void;
+        update(entities: OneOrMany, callback?: CommitCallback): Promise<CommitResult> | void;
 
-        upsert(entities: OneOrMany, callback: CommitCallback): void;
-        upsert(entities: OneOrMany): Promise<CommitResult> | void;
+        upsert(entities: OneOrMany, callback?: CommitCallback): Promise<CommitResult> | void;
     }
 
     namespace DatastoreRequest {
@@ -318,6 +326,12 @@ declare module '@google-cloud/datastore/transaction' {
         createQuery(kind: string): Query;
 
         save(entities: OneOrMany): void;
+
+        insert(entities: OneOrMany): void;
+
+        update(entities: OneOrMany): void;
+
+        upsert(entities: OneOrMany): void;
 
         delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): void;
 
