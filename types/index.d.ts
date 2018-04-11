@@ -14,21 +14,18 @@ declare module '@google-cloud/datastore' {
         OneOrMany,
     } from '@google-cloud/datastore/entity';
     import DatastoreRequest = require('@google-cloud/datastore/request');
+    import CommitCallback = DatastoreRequest.CommitCallback;
+    import CommitResult = DatastoreRequest.CommitResult;
     import DatastoreTransaction = require('@google-cloud/datastore/transaction');
     import Query = require('@google-cloud/datastore/query');
 
     class Datastore extends DatastoreRequest {
         constructor(options: Datastore.InitOptions);
 
-        readonly KEY: typeof KEY_SYMBOL;
-        readonly MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
-        readonly MORE_RESULTS_AFTER_LIMIT: Query.MoreResultsAfterLimit;
-        readonly NO_MORE_RESULTS: Query.NoMoreResults;
-
-        static readonly KEY: typeof KEY_SYMBOL;
-        static readonly MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
-        static readonly MORE_RESULTS_AFTER_LIMIT: Query.MoreResultsAfterLimit;
-        static readonly NO_MORE_RESULTS: Query.NoMoreResults;
+        public readonly KEY: typeof KEY_SYMBOL;
+        public readonly MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
+        public readonly MORE_RESULTS_AFTER_LIMIT: Query.MoreResultsAfterLimit;
+        public readonly NO_MORE_RESULTS: Query.NoMoreResults;
 
         static readonly Query: typeof Query;
         static readonly DatastoreRequest: typeof DatastoreRequest;
@@ -38,11 +35,11 @@ declare module '@google-cloud/datastore' {
         createQuery(namespace: string, kind: string): Query;
         createQuery(kind: string): Query;
 
-        save(entities: OneOrMany, callback: DatastoreRequest.CommitCallback): void;
-        save(entities: OneOrMany): Promise<DatastoreRequest.CommitResult>;
+        save(entities: OneOrMany, callback: CommitCallback): void;
+        save(entities: OneOrMany): Promise<CommitResult>;
 
-        delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: DatastoreRequest.CommitCallback): void;
-        delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<DatastoreRequest.CommitResult>;
+        delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>, callback: CommitCallback): void;
+        delete(keyOrKeys: DatastoreKey | ReadonlyArray<DatastoreKey>): Promise<CommitResult>;
 
         transaction(): DatastoreTransaction;
 
@@ -66,6 +63,27 @@ declare module '@google-cloud/datastore' {
     }
 
     namespace Datastore {
+        export const KEY: typeof KEY_SYMBOL;
+        export const MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
+        export const MORE_RESULTS_AFTER_LIMIT: Query.MoreResultsAfterLimit;
+        export const NO_MORE_RESULTS: Query.NoMoreResults;
+
+        export function int(value: string | number): DatastoreInt;
+
+        export function isInt(value: any): value is DatastoreInt;
+
+        export function double(value: string | number): DatastoreDouble;
+
+        export function isDouble(value: any): value is DatastoreDouble;
+
+        export function geoPoint(coordinates: DatastoreCoords): DatastoreGeopoint;
+
+        export function isGeoPoint(value: any): value is DatastoreGeopoint;
+
+        export function key(pathOrOptions: DatastoreKeyPath | DatastoreKeyOptions): DatastoreKey;
+
+        export function isKey(value: any): value is DatastoreKey;
+
         interface InitOptions {
             apiEndpoint?: string;
             namespace?: string;
