@@ -3,14 +3,14 @@ declare module '@google-cloud/datastore' {
     export = Datastore;
 
     import {
-        DatastoreKey,
-        KEY_SYMBOL,
-        DatastoreInt,
+        DatastoreCoords,
         DatastoreDouble,
         DatastoreGeopoint,
-        DatastoreKeyPath,
+        DatastoreInt,
+        DatastoreKey,
         DatastoreKeyOptions,
-        DatastoreCoords,
+        DatastoreKeyPath,
+        KEY_SYMBOL,
         OneOrMany,
     } from '@google-cloud/datastore/entity';
     import DatastoreRequest = require('@google-cloud/datastore/request');
@@ -18,7 +18,7 @@ declare module '@google-cloud/datastore' {
     import Query = require('@google-cloud/datastore/query');
 
     class Datastore extends DatastoreRequest {
-        constructor(options: InitOptions);
+        constructor(options: Datastore.InitOptions);
 
         readonly KEY: typeof KEY_SYMBOL;
         readonly MORE_RESULTS_AFTER_CURSOR: Query.MoreResultsAfterCursor;
@@ -65,12 +65,14 @@ declare module '@google-cloud/datastore' {
         determineBaseUrl_(customApiEndpoint?: string): void;
     }
 
-    interface InitOptions {
-        apiEndpoint?: string;
-        namespace?: string;
-        projectId?: string;
-        keyFilename?: string;
-        credentials?: object;
+    namespace Datastore {
+        interface InitOptions {
+            apiEndpoint?: string;
+            namespace?: string;
+            projectId?: string;
+            keyFilename?: string;
+            credentials?: object;
+        }
     }
 }
 
@@ -213,7 +215,7 @@ declare module '@google-cloud/datastore/query' {
 declare module '@google-cloud/datastore/request' {
     export = DatastoreRequest;
 
-    import { DatastoreKey, OneOrMany, KeyedBySymbol } from '@google-cloud/datastore/entity';
+    import { DatastoreKey, KeyedBySymbol, OneOrMany } from '@google-cloud/datastore/entity';
     import Query = require('@google-cloud/datastore/query');
     import QueryOptions = Query.QueryOptions;
     import QueryCallback = Query.QueryCallback;
@@ -288,9 +290,9 @@ declare module '@google-cloud/datastore/transaction' {
     export = DatastoreTransaction;
 
     import Datastore = require('@google-cloud/datastore');
-    import { DatastoreKey, OneOrMany } from '@google-cloud/datastore/entity';
     import Query = require('@google-cloud/datastore/query');
     import DatastoreRequest = require('@google-cloud/datastore/request');
+    import { DatastoreKey, OneOrMany } from '@google-cloud/datastore/entity';
 
     class DatastoreTransaction extends DatastoreRequest {
         constructor(datastore: Datastore);
