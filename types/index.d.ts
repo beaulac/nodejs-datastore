@@ -14,10 +14,10 @@ declare module '@google-cloud/datastore' {
         OneOrMany,
     } from '@google-cloud/datastore/entity';
     import DatastoreRequest = require('@google-cloud/datastore/request');
-    import CommitCallback = DatastoreRequest.CommitCallback;
-    import CommitResult = DatastoreRequest.CommitResult;
     import DatastoreTransaction = require('@google-cloud/datastore/transaction');
     import Query = require('@google-cloud/datastore/query');
+    import CommitCallback = DatastoreRequest.CommitCallback;
+    import CommitResult = DatastoreRequest.CommitResult;
 
     class Datastore extends DatastoreRequest {
         constructor(options: Datastore.InitOptions);
@@ -144,24 +144,24 @@ declare module '@google-cloud/datastore/entity' {
         key: DatastoreKey;
     }
 
-    interface LongPayload<T extends object> extends KeyedByProperty {
+    interface LongPayload<T extends object = object> extends KeyedByProperty {
         data: Array<EntityDataProperty<T>>;
     }
 
-    interface EntityDataProperty<T extends object> {
+    interface EntityDataProperty<T extends object = object> {
         name: keyof T;
         value: any;
         excludeFromIndexes?: boolean;
     }
 
-    interface ShortPayload<T extends object> extends KeyedByProperty {
+    interface ShortPayload<T extends object = object> extends KeyedByProperty {
         data: T;
         excludeFromIndexes?: string[];
     }
 
-    type DatastorePayload<T extends object> = LongPayload<T> | ShortPayload<T>;
+    type DatastorePayload<T extends object = object> = LongPayload<T> | ShortPayload<T>;
 
-    type ObjOrPayload<T extends object> = KeyedBySymbol<T> | DatastorePayload<T>;
+    type ObjOrPayload<T extends object = object> = KeyedBySymbol<T> | DatastorePayload<T>;
     type OneOrMany<T extends object = object> = ObjOrPayload<T> | Array<ObjOrPayload<T>>;
 }
 
