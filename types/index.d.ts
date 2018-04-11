@@ -338,22 +338,24 @@ declare module '@google-cloud/datastore/transaction' {
         commit(): Promise<DatastoreRequest.CommitResult>;
         commit(callback: DatastoreRequest.CommitCallback): void;
 
-        rollback(): Promise<RollbackResult>;
-        rollback(callback: RollbackCallback): void;
+        rollback(): Promise<DatastoreTransaction.RollbackResult>;
+        rollback(callback: DatastoreTransaction.RollbackCallback): void;
 
-        run(callback: TransactionCallback): void;
-        run(): Promise<TransactionResult>;
+        run(callback: DatastoreTransaction.TransactionCallback): void;
+        run(): Promise<DatastoreTransaction.TransactionResult>;
     }
 
-    interface BeginTransactionResponse {
-        transaction: string;
+    namespace DatastoreTransaction {
+        interface BeginTransactionResponse {
+            transaction: string;
+        }
+
+        type RollbackCallback = (err: Error, rollbackResponse: {}) => void;
+        type RollbackResult = [{}];
+
+        type TransactionCallback = (err: Error,
+                                    tx: DatastoreTransaction,
+                                    beginTxResponse: BeginTransactionResponse) => void;
+        type TransactionResult = [DatastoreTransaction, BeginTransactionResponse];
     }
-
-    type RollbackCallback = (err: Error, rollbackResponse: {}) => void;
-    type RollbackResult = [{}];
-
-    type TransactionCallback = (err: Error,
-                                tx: DatastoreTransaction,
-                                beginTxResponse: BeginTransactionResponse) => void;
-    type TransactionResult = [DatastoreTransaction, BeginTransactionResponse];
 }
