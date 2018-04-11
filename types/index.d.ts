@@ -80,8 +80,6 @@ declare module '@google-cloud/datastore' {
 
         export function isGeoPoint(value: any): value is DatastoreGeopoint;
 
-        export function key(pathOrOptions: DatastoreKeyPath | DatastoreKeyOptions): DatastoreKey;
-
         export function isKey(value: any): value is DatastoreKey;
 
         interface InitOptions {
